@@ -12,7 +12,7 @@ public class App
     {
         Path path = Paths.get("src/main/java/ru/sber/file.csv");
 
-        CityPrinter.printMaxPopulationAndIndex(path);
+        CityPrinter.printCitiesAmountByRegion(path);
 
     }
 }
