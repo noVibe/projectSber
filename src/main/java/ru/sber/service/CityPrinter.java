@@ -4,20 +4,26 @@ import ru.sber.model.City;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class CityPrinter {
 
-    public static void printCitiesFromFile(Path path) {
-        extractCities(path).forEach(System.out::println);
-    }
-    public static void printCitiesFromFile(Path path, Comparator<City> comparator) {
-        extractCities(path).stream()
-                .sorted(comparator)
-                .forEach(System.out::println);
+    public static void printMaxPopulationAndIndex(Path path) {
+        List<City> cities = extractCities(path);
+
+        int maxPopulation = 0;
+        int maxPopulationIndex = 0;
+
+        for (int i = 0, cityPopulation; i < cities.size(); i++) {
+
+            cityPopulation = cities.get(i).population();
+
+            if (cityPopulation > maxPopulation) {
+                maxPopulationIndex = i;
+                maxPopulation = cityPopulation;
+            }
+        }
+        System.out.printf("[%d] = %d", maxPopulationIndex, maxPopulation);
     }
 
     private static List<City> extractCities(Path path) {
@@ -36,5 +42,14 @@ public class CityPrinter {
             e.printStackTrace();
         }
         return cityList;
+    }
+
+    public static void printCitiesFromFile(Path path) {
+        extractCities(path).forEach(System.out::println);
+    }
+    public static void printCitiesFromFile(Path path, Comparator<City> comparator) {
+        extractCities(path).stream()
+                .sorted(comparator)
+                .forEach(System.out::println);
     }
 }
